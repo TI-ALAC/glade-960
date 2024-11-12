@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ejemplo contador regresivo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
+</head>
+
+<body class="img">
+  <main>
+    <div id="contenido" class="content" style="display: block;">
+      <img src="img/principal.jpg">
+      <div style="display: flex;flex-direction: row;justify-content: center;">
+        <span class="pozoUnidad" id="days"></span><span class="pozoUnidad2" id="days">DÍAS</span>
+      </div>
+    </div>
+  </main>
+  <!-- Contador regresivo -->
+  <!-- <section >
+        <p>
+           <span id="hours"></span> horas 
+    </section>  -->
+  <!-- Fin contador regresivo -->
+
+  <script>
+
+    var content = document.getElementById('contenido');
+    var content2 = document.getElementById('contenido2');
+
+    async function init() {
+      await getUser();
+      setTimeout(() => {
+        content.style.display = "block";
+        content2.style.display = "none";
+      }, 0);
+      setTimeout(() => {
+        content.style.display = "none";
+        content2.style.display = "block";
+      }, 2500);
+    }
+
+    init();
+    async function getUser() {
+      document.addEventListener('DOMContentLoaded', () => {
+
+        //===
+        // VARIABLES
+        //===
+        const DATE_TARGET = new Date('12/26/2024 9:00 PM');
+        console.log(DATE_TARGET)
+        // DOM for render
+        const SPAN_DAYS = document.querySelector('span#days');
+        // Milliseconds for the calculations
+        const MILLISECONDS_OF_A_SECOND = 1000;
+        const MILLISECONDS_OF_A_MINUTE = MILLISECONDS_OF_A_SECOND * 60;
+        const MILLISECONDS_OF_A_HOUR = MILLISECONDS_OF_A_MINUTE * 60;
+        const MILLISECONDS_OF_A_DAY = MILLISECONDS_OF_A_HOUR * 24
+
+        //===
+        // FUNCTIONS
+        //===
+
+        /**
+        * Method that updates the countdown and the sample
+        */
+        function updateCountdown() {
+          // Calcs
+          const NOW = new Date()
+          const DURATION = DATE_TARGET - NOW;
+          const REMAINING_DAYS = Math.floor(DURATION / MILLISECONDS_OF_A_DAY);
+          // Thanks Pablo Monteserín (https://pablomonteserin.com/cuenta-regresiva/)
+
+          // Render
+          SPAN_DAYS.textContent = REMAINING_DAYS;
+        }
+
+        //===
+        // INIT
+        //===
+        updateCountdown();
+        // Refresh every second
+        setInterval(updateCountdown, MILLISECONDS_OF_A_SECOND);
+      });
+    }
+
+  </script>
+</body>
+
+</html>
